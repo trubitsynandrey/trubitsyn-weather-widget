@@ -1,7 +1,11 @@
 <script setup lang="ts">
-
-defineProps<{ modelValue: string, name: string, placeholder: string, disabled?: boolean, error?: string }>(
-)
+defineProps<{
+  modelValue: string
+  name: string
+  placeholder: string
+  disabled?: boolean
+  error?: string
+}>()
 
 const emit = defineEmits(['update:modelValue'])
 
@@ -15,7 +19,13 @@ const updateInput = (e: Event) => {
 <template>
   <div class="my-input">
     <label>{{ name }}</label>
-    <input :value="modelValue" @input="updateInput" class="my-input__input" :placeholder="placeholder" :disabled="disabled"/>
+    <input
+      :value="modelValue"
+      @input="updateInput"
+      class="my-input__input"
+      :placeholder="placeholder"
+      :disabled="disabled"
+    />
     <p v-if="error">{{ error }}</p>
   </div>
 </template>

@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch } from 'vue'
+
 import CloseIcon from '@/icons/close-icon.svg'
+
 const emit = defineEmits(['close'])
 
 const isOpen = ref(false)
@@ -16,24 +18,20 @@ const closePopup = () => {
 
 watch(isOpen, (newIsOpen) => {
   if (newIsOpen) {
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden'
   } else {
-    document.body.style.overflow = '';
+    document.body.style.overflow = ''
   }
-});
-
+})
 
 defineExpose({ openPopup, closePopup })
-
-
 </script>
 
 <template>
   <teleport to="#modal">
     <Transition name="fade">
       <div v-if="isOpen">
-        <div class="modal">
-        </div>
+        <div class="modal"></div>
         <div class="modal__inners">
           <slot></slot>
           <div class="modal__close" @click="closePopup"><CloseIcon /></div>
@@ -67,7 +65,7 @@ defineExpose({ openPopup, closePopup })
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #D8D9DA;
+  background-color: #d8d9da;
   color: black;
   padding: 24px;
   display: flex;
@@ -84,5 +82,4 @@ defineExpose({ openPopup, closePopup })
 .fade-leave-to {
   opacity: 0;
 }
-
 </style>

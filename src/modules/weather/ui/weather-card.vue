@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import { url } from '@/constants';
-import PressureIcon from '@/icons/pressure-icon.svg';
-import WindIcon from '@/icons/wind-icon.svg';
-import { formatThousands } from '@/modules/weather/utils';
-import { computed } from 'vue';
-import { WeatherData } from '../types';
+import { computed } from 'vue'
 
+import { url } from '@/constants'
+import PressureIcon from '@/icons/pressure-icon.svg'
+import WindIcon from '@/icons/wind-icon.svg'
+import { formatThousands } from '@/modules/weather/utils'
+
+import { WeatherData } from '../types'
 
 const getWeatherImg = (str: string) => `${url}/img/wn/${str}@2x.png`
-const props = defineProps<{weather: WeatherData}>()
+const props = defineProps<{ weather: WeatherData }>()
 
 const imgComputed = computed(() => getWeatherImg(props.weather.weather[0].icon ?? ''))
-
-
 </script>
 <template>
   <div class="weather-city_card">
@@ -21,8 +20,10 @@ const imgComputed = computed(() => getWeatherImg(props.weather.weather[0].icon ?
       <img :src="imgComputed" width="100" height="100" />
       <p>{{ Math.floor(props?.weather.main.temp) }} &#8451;</p>
     </div>
-    <p style="text-wrap: balance">Feels like: {{ Math.floor(props.weather.main.feels_like) }} &#8451;.
-      {{ props.weather.weather[0].main }}. {{ props.weather.weather[0].description }} </p>
+    <p style="text-wrap: balance">
+      Feels like: {{ Math.floor(props.weather.main.feels_like) }} &#8451;.
+      {{ props.weather.weather[0].main }}. {{ props.weather.weather[0].description }}
+    </p>
     <div class="grid_description">
       <div class="description_item">
         <div class="wind-icon_wrapper">
@@ -47,8 +48,6 @@ const imgComputed = computed(() => getWeatherImg(props.weather.weather[0].icon ?
 </template>
 
 <style scoped>
-
-
 .withImgContainer {
   display: flex;
   align-items: center;
