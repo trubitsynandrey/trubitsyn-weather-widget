@@ -4,7 +4,7 @@ export type LatLon = {
 }
 
 export type WeatherData = {
-  order: number
+  order?: number
   coord: {
     lon: number
     lat: number

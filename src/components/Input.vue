@@ -17,32 +17,32 @@ const updateInput = (e: Event) => {
 </script>
 
 <template>
-  <div class="my-input">
+  <div class="input">
     <label>{{ name }}</label>
     <input
       :value="modelValue"
       @input="updateInput"
-      class="my-input__input"
+      class="input__input"
       :placeholder="placeholder"
       :disabled="disabled"
     />
-    <p v-if="error">{{ error }}</p>
+    <p v-if="error" class="input__error">{{ error }}</p>
   </div>
 </template>
 
 <style scoped>
-.my-input {
+.input {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-.my-input label {
+.input label {
   font-weight: bold;
   margin-bottom: 8px;
 }
 
-.my-input__input {
+.input__input {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -51,9 +51,13 @@ const updateInput = (e: Event) => {
   width: 100%;
 }
 
-.my-input__input:focus,
-.my-input__input:hover {
+.input__input:focus,
+.input__input:hover {
   border-color: #007bff;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.input__error {
+  color: red;
 }
 </style>
