@@ -32,7 +32,7 @@ defineProps<{ cities: WeatherData[] }>()
   </VueDraggableNext>
 </template>
 
-<style scoped>
+<style lang="scss">
 .weather-card_list {
   display: grid;
   gap: 24px;
@@ -61,24 +61,25 @@ defineProps<{ cities: WeatherData[] }>()
   background: none;
   outline: none;
   padding: 0;
+  &:hover {
+    color: red;
+  }
 }
 
-.delete_wrapper:hover {
-  color: red;
-}
+.slide {
+  &-move,
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.8s cubic-bezier(0.55, 0, 0.1, 1);
+  }
 
-.slide-move,
-.slide-enter-active,
-.slide-leave-active {
-  transition: all 0.8s cubic-bezier(0.55, 0, 0.1, 1);
-}
-
-.slide-enter-from,
-.slide-leave-to {
-  opacity: 0;
-  transform: translateX(30px);
-}
-.slide-leave-active {
-  transition: all 0.5s ease;
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  &-leave-active {
+    transition: all 0.5s ease;
+  }
 }
 </style>

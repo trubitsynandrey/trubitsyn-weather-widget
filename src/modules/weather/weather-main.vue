@@ -1,26 +1,14 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
-import { apiKey, mainUrl } from '@/constants'
+import Input from '@/components/Input.vue'
+import Modal from '@/components/Modal.vue'
 import SettingsIcon from '@/icons/settings-icon.svg'
 import { WeatherData } from '@/modules/weather/types'
 import CityCardsList from '@/modules/weather/ui/city-cards-list.vue'
 import WeatherCard from '@/modules/weather/ui/weather-card.vue'
 
-import Input from './Input.vue'
-import Modal from './Modal.vue'
-
-export type Post = {
-  title: string
-  id: string
-  body: string
-  order: number
-}
-
-type LatLon = {
-  lat: number
-  lon: number
-}
+import { getTheLatLonByName, getTheWeatherByLatLon } from './utils'
 
 const modalRef = ref()
 
@@ -28,28 +16,13 @@ const weatherCards = ref<WeatherData[]>([])
 
 const townToAdd = ref('')
 
-const isLoading = ref(true)
+const isLoading = ref(false)
 
 const error = ref('')
 
 const handleDeleteWeatherCard = (id: number) => {
   weatherCards.value = [...weatherCards.value.filter((item) => item.id !== id)]
-}
-
-const getTheLatLonByName = async (name: string): Promise<{ lat: number; lon: number }> => {
-  const response = await fetch(`${mainUrl}geo/1.0/direct?q=${name}&limit=1&appid=${apiKey}`)
-  const data = await response.json()
-
-  return { lat: data[0].lat, lon: data[0].lon }
-}
-
-const getTheWeatherByLatLon = async ({ lat, lon }: LatLon): Promise<WeatherData> => {
-  const response = await fetch(
-    `${mainUrl}data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`,
-  )
-  const data = await response.json()
-
-  return data as WeatherData
+  localStorage.setItem('weatherCards', JSON.stringify(weatherCards.value))
 }
 
 const getWeatherOnSubmit = async (name: string) => {
@@ -59,10 +32,9 @@ const getWeatherOnSubmit = async (name: string) => {
 
   try {
     const latLon = await getTheLatLonByName(name)
-    // eslint-disable-next-line no-console
-    console.log(latLon, 'latlon')
     const newWeather = await getTheWeatherByLatLon(latLon)
     weatherCards.value = [...weatherCards.value, newWeather]
+    localStorage.setItem('weatherCards', JSON.stringify(weatherCards.value))
   } catch (e) {
     error.value = name
     /* empty */
@@ -78,9 +50,20 @@ const openPopUp = () => {
 
 const handleDrag = () => {
   weatherCards?.value?.forEach((post, i) => (post.order = i))
+  localStorage.setItem('weatherCards', JSON.stringify(weatherCards.value))
 }
 
 onMounted(async () => {
+  const savedWeatherCards = localStorage.getItem('weatherCards')
+
+  if (savedWeatherCards) {
+    weatherCards.value = JSON.parse(savedWeatherCards)
+
+    return
+  }
+
+  isLoading.value = true
+
   if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition(
       async function (position) {
@@ -89,17 +72,15 @@ onMounted(async () => {
 
         const weather = await getTheWeatherByLatLon({ lat: latitude, lon: longitude })
         weatherCards.value = [...weatherCards.value, weather]
+        localStorage.setItem('weatherCards', JSON.stringify(weatherCards.value))
         isLoading.value = false
-        // eslint-disable-next-line no-console
-        console.log(weather, 'weather')
       },
       async function () {
         const latLonDataDefault = await getTheLatLonByName('London')
         const weatherDefault = await getTheWeatherByLatLon(latLonDataDefault)
         weatherCards.value = [...weatherCards.value, weatherDefault]
+        localStorage.setItem('weatherCards', JSON.stringify(weatherCards.value))
         isLoading.value = false
-        // eslint-disable-next-line no-console
-        console.log(weatherDefault, 'weatherDefault')
       },
     )
   }
@@ -116,7 +97,6 @@ onMounted(async () => {
   <div class="settings_wrapper" @click="openPopUp">
     <SettingsIcon />
   </div>
-
   <Modal ref="modalRef">
     <div class="modal_inners">
       <CityCardsList

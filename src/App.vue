@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import Main from './components/Main.vue'
+import WeatherMain from './modules/weather/weather-main.vue'
 </script>
 
 <template>
-  <Main />
+  <WeatherMain />
 </template>
 
 <style scoped></style>

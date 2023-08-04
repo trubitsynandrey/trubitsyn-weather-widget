@@ -30,16 +30,15 @@ const updateInput = (e: Event) => {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .input {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-}
-
-.input label {
-  font-weight: bold;
-  margin-bottom: 8px;
+  & label {
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
 }
 
 .input__input {
@@ -49,12 +48,11 @@ const updateInput = (e: Event) => {
   outline: none;
   font-size: 16px;
   width: 100%;
-}
-
-.input__input:focus,
-.input__input:hover {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  &:focus,
+  &:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
 }
 
 .input__error {

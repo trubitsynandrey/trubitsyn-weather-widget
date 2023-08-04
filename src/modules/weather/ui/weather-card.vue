@@ -47,15 +47,15 @@ const imgComputed = computed(() => getWeatherImg(props.weather.weather[0].icon ?
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .withImgContainer {
   display: flex;
   align-items: center;
+  & p {
+    font-size: 24px;
+  }
 }
 
-.withImgContainer p {
-  font-size: 24px;
-}
 .wind-icon_wrapper {
   width: 24px;
   height: 24px;
