@@ -28,20 +28,20 @@ defineExpose({ openPopup, closePopup })
 </script>
 
 <template>
-  <teleport to="#modal">
-    <Transition name="fade">
-      <div v-if="isOpen">
-        <div class="modal"></div>
-        <div class="modal__inners">
-          <slot></slot>
-          <div class="modal__close" @click="closePopup"><CloseIcon /></div>
-        </div>
+  <!-- <teleport to="#modal"> -->
+  <Transition name="fade">
+    <div v-show="isOpen">
+      <div class="modal"></div>
+      <div class="modal__inners">
+        <slot></slot>
+        <div class="modal__close" @click="closePopup"><CloseIcon /></div>
       </div>
-    </Transition>
-  </teleport>
+    </div>
+  </Transition>
+  <!-- </teleport> -->
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .modal {
   position: fixed;
   top: 0;

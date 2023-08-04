@@ -6,7 +6,16 @@ import svgLoader from 'vite-svg-loader'
 // https://vitejs.dev/config/
 export default defineConfig({
   base: process.env.VITE_BASE_PATH,
-  plugins: [vue(), svgLoader({ defaultImport: 'component' })],
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.includes('-'),
+        },
+      },
+    }),
+    svgLoader({ defaultImport: 'component' }),
+  ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -18,5 +27,15 @@ export default defineConfig({
         // Additional options here
       },
     },
+  },
+  build: {
+    lib: {
+      entry: './src/main.ce.ts',
+      name: 'weather-widget',
+      fileName: 'weather-widget',
+    },
+  },
+  define: {
+    'process.env': process.env,
   },
 })

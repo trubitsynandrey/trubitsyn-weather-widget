@@ -6,13 +6,15 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
+    "build-cli": "./node_modules/.bin/vue-cli-service build --target lib --name AppComponent src/main.ts",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore"
   },
   "dependencies": {
+    "@vue/cli-service": "^5.0.8",
     "vue": "^3.3.4",
     "vue-draggable-next": "^2.2.1"
-  },
+  },  
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",

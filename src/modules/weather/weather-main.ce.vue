@@ -88,7 +88,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="container">
+  <div class="container weather-widget">
     <div v-if="!weatherCards.length">{{ isLoading ? 'Loading...' : 'Nothing is here' }}</div>
     <div v-else class="weather-card_list">
       <WeatherCard v-for="weather in weatherCards" :weather="weather" :key="weather.name" />
@@ -119,7 +119,14 @@ onMounted(async () => {
   </Modal>
 </template>
 
-<style scoped>
+<style>
+@import url('./styles/modal.scss');
+@import url('./styles/city-card-list.scss');
+@import url('./styles/weather-card.scss');
+@import url('../../normalize.css');
+@import url('./styles/input.scss');
+@import url('../../style.css');
+
 .weather-card_list {
   display: grid;
   gap: 24px;
@@ -131,6 +138,7 @@ onMounted(async () => {
   right: 24px;
   position: absolute;
   cursor: pointer;
+  color: #fff6e0;
 }
 
 .modal_inners {

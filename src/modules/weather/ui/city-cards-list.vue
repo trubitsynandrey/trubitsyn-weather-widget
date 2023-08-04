@@ -33,53 +33,5 @@ defineProps<{ cities: WeatherData[] }>()
 </template>
 
 <style lang="scss">
-.weather-card_list {
-  display: grid;
-  gap: 24px;
-}
-
-.weather-card-settings_list {
-  display: grid;
-  gap: 16px;
-}
-
-.city_settings {
-  background-color: #272829;
-  padding: 8px;
-  color: #fff6e0;
-  border-radius: 8px;
-  padding: 8px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.delete_wrapper {
-  width: 20px;
-  height: 20px;
-  border: none;
-  background: none;
-  outline: none;
-  padding: 0;
-  &:hover {
-    color: red;
-  }
-}
-
-.slide {
-  &-move,
-  &-enter-active,
-  &-leave-active {
-    transition: all 0.8s cubic-bezier(0.55, 0, 0.1, 1);
-  }
-
-  &-enter-from,
-  &-leave-to {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  &-leave-active {
-    transition: all 0.5s ease;
-  }
-}
+@import url('../styles/city-card-list.scss');
 </style>
