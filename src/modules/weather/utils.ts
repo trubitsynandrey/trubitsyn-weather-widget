@@ -27,3 +27,7 @@ export const formatThousands = (num: number) => {
     return formattedNum.replace('.', ',')
   }
 }
+
+export const localStorageSetWeather = (weatherCards: WeatherData[]) => {
+  localStorage.setItem('weatherCards', JSON.stringify(weatherCards))
+}

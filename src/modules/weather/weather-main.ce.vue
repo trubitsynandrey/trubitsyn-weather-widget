@@ -8,7 +8,7 @@ import { WeatherData } from '@/modules/weather/types'
 import CityCardsList from '@/modules/weather/ui/city-cards-list.vue'
 import WeatherCard from '@/modules/weather/ui/weather-card.vue'
 
-import { getTheLatLonByName, getTheWeatherByLatLon } from './utils'
+import { getTheLatLonByName, getTheWeatherByLatLon, localStorageSetWeather } from './utils'
 
 const modalRef = ref()
 
@@ -22,7 +22,7 @@ const error = ref('')
 
 const handleDeleteWeatherCard = (id: number) => {
   weatherCards.value = [...weatherCards.value.filter((item) => item.id !== id)]
-  localStorage.setItem('weatherCards', JSON.stringify(weatherCards.value))
+  localStorageSetWeather(weatherCards.value)
 }
 
 const getWeatherOnSubmit = async (name: string) => {
@@ -34,7 +34,7 @@ const getWeatherOnSubmit = async (name: string) => {
     const latLon = await getTheLatLonByName(name)
     const newWeather = await getTheWeatherByLatLon(latLon)
     weatherCards.value = [...weatherCards.value, newWeather]
-    localStorage.setItem('weatherCards', JSON.stringify(weatherCards.value))
+    localStorageSetWeather(weatherCards.value)
   } catch (e) {
     error.value = name
     /* empty */
@@ -50,7 +50,7 @@ const openPopUp = () => {
 
 const handleDrag = () => {
   weatherCards?.value?.forEach((post, i) => (post.order = i))
-  localStorage.setItem('weatherCards', JSON.stringify(weatherCards.value))
+  localStorageSetWeather(weatherCards.value)
 }
 
 onMounted(async () => {
@@ -72,14 +72,14 @@ onMounted(async () => {
 
         const weather = await getTheWeatherByLatLon({ lat: latitude, lon: longitude })
         weatherCards.value = [...weatherCards.value, weather]
-        localStorage.setItem('weatherCards', JSON.stringify(weatherCards.value))
+        localStorageSetWeather(weatherCards.value)
         isLoading.value = false
       },
       async function () {
         const latLonDataDefault = await getTheLatLonByName('London')
         const weatherDefault = await getTheWeatherByLatLon(latLonDataDefault)
         weatherCards.value = [...weatherCards.value, weatherDefault]
-        localStorage.setItem('weatherCards', JSON.stringify(weatherCards.value))
+        localStorageSetWeather(weatherCards.value)
         isLoading.value = false
       },
     )
@@ -126,7 +126,6 @@ onMounted(async () => {
 @import url('../../normalize.css');
 @import url('./styles/input.scss');
 @import url('../../style.css');
-
 .weather-card_list {
   display: grid;
   gap: 24px;
