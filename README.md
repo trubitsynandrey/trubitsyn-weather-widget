@@ -1,3 +1,4 @@
+hh: https://izhevsk.hh.ru/resume/547d001fff07166d200039ed1f5754595a7871
 # Vue 3 + TypeScript + Vite Web component for the weather
 
 ```<weather-widget></weather-widget>```
